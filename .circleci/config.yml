@@ -19,7 +19,7 @@ workflows:
                 
 jobs:
   build:
-    working_directory: ~/ExampleApplication
+    working_directory: ~/example_application
     docker: 
       - image: circleci/node:10.16.3
     steps:
@@ -28,9 +28,9 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@5'
       - restore_cache:
-          key: dependency-cache-{{ checksumn "package-lock.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
-          name: install-npm
+          name: install-npm-wee
           command: npm install
       - run:
           name: test-run
@@ -45,4 +45,4 @@ jobs:
     steps:
       - run:
           name: deploy_application
-          command: ssh -o StrictHostKeyChecking=no $EC2_USERNAME@EC2_PUBLIC_DNS " rm -rf ExampleApplication/;git clone https://github.com/Aflynn987/ExampleApplication.git; source ExampleApplication/deploy.sh
+          command: ssh -o StrictHostKeyChecking=no $EC2_USERNAME@EC2_PUBLIC_DNS "rm -rf ExampleApplication/;git clone https://github.com/Aflynn987/ExampleApplication.git; source ExampleApplication/deploy.sh
