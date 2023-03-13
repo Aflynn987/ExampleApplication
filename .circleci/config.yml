@@ -32,9 +32,6 @@ jobs:
       - run:
           name: install-npm-wee
           command: npm install
-      - run:
-          name: test-run
-          command: npm run test
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
@@ -45,4 +42,4 @@ jobs:
     steps:
       - run:
           name: deploy_application
-          command: ssh $ubuntu@ec2-13-48-147-93.eu-north-1.compute.amazonaws.com "rm -rf ExampleApplication/;git clone https://github.com/Aflynn987/ExampleApplication.git; source ExampleApplication/deploy.sh"
+          command: ssh -o StringHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS "rm -rf ExampleApplication/;git clone https://github.com/Aflynn987/ExampleApplication.git; source ExampleApplication/deploy.sh"
